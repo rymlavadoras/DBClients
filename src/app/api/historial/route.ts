@@ -7,7 +7,7 @@ import { obtenerHistorialPorArtefacto } from '@/lib/googleSheets';
 
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
+    const { searchParams } = request.nextUrl;
     const cliente = searchParams.get('cliente');
     const marca = searchParams.get('marca');
     const modelo = searchParams.get('modelo');
