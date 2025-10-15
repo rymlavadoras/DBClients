@@ -90,27 +90,15 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async redirect({ url, baseUrl }) {
-      // Permite redirecciones relativas
+      // Si es una redirección relativa, usar baseUrl
       if (url.startsWith("/")) return `${baseUrl}${url}`;
-      // Permite redirecciones al mismo dominio
+      // Si es del mismo origen, permitir
       else if (new URL(url).origin === baseUrl) return url;
-      return baseUrl;
+      // Por defecto, ir al dashboard
+      return `${baseUrl}/`;
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
-  debug: false,
-  useSecureCookies: process.env.NODE_ENV === 'production',
-  cookies: {
-    sessionToken: {
-      name: `next-auth.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: 'lax',
-        path: '/',
-        secure: process.env.NODE_ENV === 'production',
-      },
-    },
-  },
 };
 
 
